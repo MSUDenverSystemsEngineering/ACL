@@ -118,9 +118,9 @@ Try {
 		Show-InstallationProgress
 		
 		## <Perform Pre-Installation tasks here>
-		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameter "/quiet" 
+		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameters "/quiet" 
 
-		Execute-MSI -Action Install "$dirFiles\ENU\ACL\Requirements\ACLRU.msi" -Parameter "/qn"
+		Execute-MSI -Action Install "$dirFiles\Requirements\ACLRequirementsUpdate.msi" -Parameters "/quiet"
 		
 		##*===============================================
 		##* INSTALLATION 
