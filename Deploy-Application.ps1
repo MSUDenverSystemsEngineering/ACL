@@ -64,7 +64,7 @@ Try {
 	[string]$appRevision = '01'
 	[string]$appScriptVersion = '1.0.0'
 	[string]$appScriptDate = '05/11/2017'
-	[string]$appScriptAuthor = '<author name>'
+	[string]$appScriptAuthor = 'Quan Tran'
 	##*===============================================
 	## Variables: Install Titles (Only set here to override defaults set by the toolkit)
 	[string]$installName = ''
@@ -120,7 +120,7 @@ Try {
 		## <Perform Pre-Installation tasks here>
 		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameters "/quiet" 
 
-		Execute-MSI -Action Install "$dirFiles\Requirements\ACLRequirementsUpdate.msi" -Parameters "/quiet"
+		##Execute-MSI -Action Install "$dirFiles\Requirements\ACLRequirementsUpdate.msi"
 		
 		##*===============================================
 		##* INSTALLATION 
@@ -134,7 +134,7 @@ Try {
 		}
 		
 		## <Perform Installation tasks here>
-		Execute-Process -Path "$dirFiles\ENU\ACL\setup.exe" -Parameters "/silent" -WindowStyle "Hidden" -PassThru
+		Execute-MSI -Action Install "$dirFiles\ENU\ACL\ACL Desktop Education Edition.msi" -Parameters "/quiet"
 		
 		##*===============================================
 		##* POST-INSTALLATION
