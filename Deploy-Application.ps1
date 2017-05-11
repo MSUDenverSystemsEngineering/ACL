@@ -120,7 +120,7 @@ Try {
 		## <Perform Pre-Installation tasks here>
 		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameter "/quiet" 
 
-		Execute-MSI -Action Install "$dirFiles\ENU\ACL\Requirements\ACL Requirements Update.msi" -Parameter "/qn"
+		Execute-MSI -Action Install "$dirFiles\ENU\ACL\Requirements\ACLRU.msi" -Parameter "/qn"
 		
 		##*===============================================
 		##* INSTALLATION 
