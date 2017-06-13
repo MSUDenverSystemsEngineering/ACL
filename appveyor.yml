@@ -4,11 +4,11 @@ init:
 - ps: $deploy = "`$vmwfs14 = New-PSSession -ComputerName VMWFS14`nCopy-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}`" -Destination `"H:\Archive\SCCM\Staging\`${Env:APPVEYOR_PROJECT_NAME}\`${Env:APPVEYOR_BUILD_VERSION}`" -ToSession `$vmwfs14 -Recurse"
 install:
 - ps: >-
-    Install-PackageProvider -Name NuGet –Force
-    Install-Package -Name Pester -ProviderName PowerShellGet -Scope AllUsers -Force
-    Install-Module -Name PSScriptAnalyzer -Scope AllUsers –Force
-    Import-Module -Name Pester
-    Import-Module -Name PSScriptAnalyzer
+    Install-PackageProvider NuGet –Force
+    Install-Package Pester -ProviderName PowerShellGet -Scope AllUsers -Force
+    Install-Module PSScriptAnalyzer -Scope AllUsers –Force
+    Import-Module Pester
+    Import-Module PSScriptAnalyzer
 
     7z a -tzip "${Env:APPVEYOR_BUILD_FOLDER}\${Env:APPVEYOR_PROJECT_NAME}.zip" "${Env:APPVEYOR_BUILD_FOLDER}" "-xr!Tests" "-xr!.git" "-x!appveyor.yml .gitignore .gitattributes"
     $deploy | Out-File "${Env:APPVEYOR_BUILD_FOLDER}\deploy.ps1"
