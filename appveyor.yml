@@ -14,7 +14,7 @@ install:
 
     Import-Module -Name PSScriptAnalyzer
 
-    7z a -tzip "${Env:APPVEYOR_BUILD_FOLDER}\${Env:APPVEYOR_PROJECT_NAME}.zip" "${Env:APPVEYOR_BUILD_FOLDER}" "-x!Tests" "-xr!.git*" "-x!appveyor.yml"
+    7z a -tzip "${Env:APPVEYOR_BUILD_FOLDER}\${Env:APPVEYOR_PROJECT_NAME}.zip" "${Env:APPVEYOR_BUILD_FOLDER}" "-x!${Env:APPVEYOR_BUILD_FOLDER}\Tests" "-xr!.git*" "-xr!${Env:APPVEYOR_BUILD_FOLDER}\appveyor.yml"
 
     $deploy | Out-File "${Env:APPVEYOR_BUILD_FOLDER}\deploy.ps1"
 
