@@ -1,7 +1,7 @@
 version: 1.0.{build}
 image: WMF 5
 init:
-- ps: $deploy = "`$vmwfs14 = New-PSSession -ComputerName VMWFS14`nCopy-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}`" -Destination `"H:\Archive\SCCM\Staging\`${Env:APPVEYOR_PROJECT_NAME}\`${Env:APPVEYOR_BUILD_VERSION}`" -ToSession `$vmwfs14 -Recurse"
+- ps: $deploy = "`$vmwfs14 = New-PSSession -ComputerName VMWFS14`nRemove-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\appveyor.yml`"`nCopy-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}`" -Destination `"H:\Archive\SCCM\Staging\`${Env:APPVEYOR_PROJECT_NAME}\`${Env:APPVEYOR_BUILD_VERSION}`" -ToSession `$vmwfs14 -Recurse"
 install:
 - ps: >-
     Install-PackageProvider -Name NuGet –Force
@@ -14,7 +14,7 @@ install:
 
     Import-Module -Name PSScriptAnalyzer
 
-    7z a -tzip "${Env:APPVEYOR_BUILD_FOLDER}\${Env:APPVEYOR_PROJECT_NAME}.zip" "${Env:APPVEYOR_BUILD_FOLDER}" "-x!${Env:APPVEYOR_BUILD_FOLDER}\Tests" "-xr!.git*" "-x!${Env:APPVEYOR_BUILD_FOLDER}\appveyor*"
+    7z a -tzip "${Env:APPVEYOR_BUILD_FOLDER}\${Env:APPVEYOR_PROJECT_NAME}.zip" "${Env:APPVEYOR_BUILD_FOLDER}" "-x!${Env:APPVEYOR_BUILD_FOLDER}\Tests" "-xr!.git*"
 
     $deploy | Out-File "${Env:APPVEYOR_BUILD_FOLDER}\deploy.ps1"
 
