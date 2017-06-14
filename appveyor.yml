@@ -6,23 +6,23 @@ init:
 
     `$vmwfs14 = New-PSSession -ComputerName VMWFS14
 
-    Remove-Item -Path "`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\appveyor.yml"
+    Remove-Item -Path '${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\appveyor.yml'
 
-    Remove-Item -Path "`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\.gitignore" -Force
+    Remove-Item -Path '${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\.gitignore' -Force
 
-    Remove-Item -Path "`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\.gitattributes" -Force
+    Remove-Item -Path '${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\.gitattributes' -Force
 
-    Remove-Item -Path "`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\.git" -Recurse -Force
+    Remove-Item -Path '${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\.git' -Recurse -Force
 
-    Remove-Item -Path "`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\Tests" -Recurse
+    Remove-Item -Path '${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\Tests' -Recurse
 
-    Copy-Item -Path "`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}" -Destination "H:\Archive\SCCM\Staging\`${Env:APPVEYOR_PROJECT_NAME}\`${Env:APPVEYOR_BUILD_VERSION}" -ToSession $vmwfs14 -Recurse"
+    Copy-Item -Path '${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}' -Destination 'H:\Archive\SCCM\Staging\${Env:APPVEYOR_PROJECT_NAME}\${Env:APPVEYOR_BUILD_VERSION}' -ToSession '$vmwfs14' -Recurse
 
-    Import-Module -Name "$(Split-Path `$Env:SMS_ADMIN_UI_PATH)\ConfigurationManager.psd1"
+    Import-Module -Name '$(Split-Path $Env:SMS_ADMIN_UI_PATH)\ConfigurationManager.psd1'
 
     Set-Location -Path MS1:
 
-    New-CMApplication -Name "AppVeyor - `${APPVEYOR_PROJECT_NAME}" -AutoInstall $true
+    New-CMApplication -Name 'AppVeyor - ${APPVEYOR_PROJECT_NAME}' -AutoInstall `$true
 
     "@
 install:
@@ -49,7 +49,7 @@ test_script:
 
     $results = Invoke-Pester -OutputFormat NUnitXml -OutputFile $testResultsFile -PassThru
 
-    (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
+    (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($Env:APPVEYOR_JOB_ID)", (Resolve-Path $testResultsFile))
 
     If ($results.FailedCount -gt 0) {
       throw "$($results.FailedCount) tests failed."
