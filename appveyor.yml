@@ -20,6 +20,8 @@ init:
 
     Import-Module -Name "`$(Split-Path `$Env:SMS_ADMIN_UI_PATH)\ConfigurationManager.psd1"
 
+    New-PSDrive -Name "MS1" -PSProvider "AdminUI.PS.Provider\CMSite" -Root "vmwas117.winad.msudenver.edu" -Description "MS1"
+
     Set-Location -Path MS1:
 
     New-CMApplication -Name "AppVeyor - `${APPVEYOR_PROJECT_NAME}" -AutoInstall `$true
