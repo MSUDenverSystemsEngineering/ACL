@@ -14,13 +14,13 @@ New-PSDrive -Name "MS1" -PSProvider "AdminUI.PS.Provider\CMSite" -Root "VMWAS117
 Set-Location -Path MS1:
 
 New-CMApplication -Name $applicationName -AutoInstall $true
-Add-CMDeploymentType -ApplicationName $applicationName -DeploymentTypeName "$applicationName ${Env:APPVEYOR_BUILD_VERSION} PowerShell App Deployment Toolkit" -InstallationProgram "Deploy-Application.exe" -AdministratorComment "AppVeyor test" -AllowClientsToShareContentOnSameSubnet $true -ContentLocation "\\vmwfs14\H$\Archive\SCCM\Staging\${Env:APPVEYOR_PROJECT_NAME}\${Env:APPVEYOR_BUILD_VERSION}" -InstallationBehaviorType "InstallForSystem" -InstallationProgramVisibility "Normal" -LogonRequirementType "WhetherOrNotUserLoggedOn" -MaximumAllowedRunTimeMinutes 720 -PersistContentInClientCache $false -RunInstallationProgramAs32BitProcessOn64BitClient $false -UninstallProgram "Deploy-Application.exe -DeploymentType `"Uninstall`""
+Add-CMDeploymentType -ApplicationName $applicationName -DeploymentTypeName "$applicationName ${Env:APPVEYOR_BUILD_VERSION} PowerShell App Deployment Toolkit" -InstallationProgram "Deploy-Application.exe -DeploymentType `"Install`" -AllowRebootPassThru" -ScriptContent "Change this deployment type's detection method to find the application." -ScriptInstaller $true -ScriptType "PowerShell" -AdministratorComment "AppVeyor test" -AllowClientsToShareContentOnSameSubnet $true -ContentLocation "\\vmwfs14\H$\Archive\SCCM\Staging\${Env:APPVEYOR_PROJECT_NAME}\${Env:APPVEYOR_BUILD_VERSION}" -InstallationBehaviorType "InstallForSystem" -InstallationProgramVisibility "Normal" -LogonRequirementType "WhetherOrNotUserLoggedOn" -MaximumAllowedRunTimeMinutes 720 -PersistContentInClientCache $false -RunInstallationProgramAs32BitProcessOn64BitClient $false -RunScriptAs32bitProcessOn64bitClient $false -UninstallProgram "Deploy-Application.exe -DeploymentType `"Uninstall`" -AllowRebootPassThru"
 
 # SIG # Begin signature block
 # MIIU4wYJKoZIhvcNAQcCoIIU1DCCFNACAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCoVo2dMGUW2LbG
-# aFERFy/XLCN+YbEToQ7jDu32k8H236CCD4cwggQUMIIC/KADAgECAgsEAAAAAAEv
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCaNVSPPDV0soX4
+# 7pA4XboktMf1IjFbQa1D7WFTENksOqCCD4cwggQUMIIC/KADAgECAgsEAAAAAAEv
 # TuFS1zANBgkqhkiG9w0BAQUFADBXMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xv
 # YmFsU2lnbiBudi1zYTEQMA4GA1UECxMHUm9vdCBDQTEbMBkGA1UEAxMSR2xvYmFs
 # U2lnbiBSb290IENBMB4XDTExMDQxMzEwMDAwMFoXDTI4MDEyODEyMDAwMFowUjEL
@@ -107,26 +107,26 @@ Add-CMDeploymentType -ApplicationName $applicationName -DeploymentTypeName "$app
 # FgNlZHUxGTAXBgoJkiaJk/IsZAEZFgltc3VkZW52ZXIxFTATBgoJkiaJk/IsZAEZ
 # FgV3aW5hZDEZMBcGA1UEAxMQd2luYWQtVk1XQ0EwMS1DQQITfwAAACITuo77mvOv
 # 9AABAAAAIjANBglghkgBZQMEAgEFAKBmMBgGCisGAQQBgjcCAQwxCjAIoAKAAKEC
-# gAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEICAN
-# 7WHAzVkiDDSL7A8zS+5cfLL8Gn2JOJZdfUjiR52nMA0GCSqGSIb3DQEBAQUABIIB
-# AFeaRjdwIImWGxOrUo2Z5LH3VfvHt7kYsIH7UI/1Gn/FVbpFUdGRvWaNY+G5c4PR
-# Byt4i+yTUZuI0dTI9oshbrQuvveI26hDGQpSyeoVhKjZdcCkCeYUN65yqIAoaf3d
-# I4tCdnM75eNMRaoMFUGNCm91MHEQfoQG+ZFF/L5ZDXYwRd5syG+yMoV9vfV3e19w
-# nCqWVUFFAgfdBCuwkYaIlBBi5kjnIAuhbdjPybqsLJ7FQt/AsTuC7dWAlun8wl+b
-# OGT/h4n/H21dAZRmjs+w5tC6ECJgjynMMa2bcY7KBaFwHZvhGwjSNgpkIw6mDfUc
-# mcpwoIn0owVdR9UiZrtRHlmhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEw
+# gAAwGQYJKoZIhvcNAQkDMQwGCisGAQQBgjcCAQQwLwYJKoZIhvcNAQkEMSIEIFlj
+# tASrPVSNfv1047Wxtb4U8hM/PxLRHuirfmhr0GArMA0GCSqGSIb3DQEBAQUABIIB
+# ABlk8RqjBdg/JcT/d3qMqxbX24HAZ4QIe1zBlwd4y3stptb+uMxaPMPCio591R1B
+# BcE0ClPsU/C07Ptx0khpXVmQ87qul9efXneeV/2zy/Xvb2G3PnnwI+TdN0CdxK0r
+# JODpHpCuCuVmn9cEInswSBH6X/SibgBlKuaetbLOsGhJQhLMQKVxYfhOAdr9rLWH
+# R6CcY3lm0fb/iexglzkyCdmz89crdgipS0CviyyNS/py3vKCLUcHLeuHYVPQ0ORC
+# swGg1AYOIIyVZ+CvoECFU02Ze1zDVmCaJOZWY7ew9029bB0MqpdYIq9QdWEkWgoc
+# +Mu7Z80I8y7YRdgqJ3TTgiOhggKiMIICngYJKoZIhvcNAQkGMYICjzCCAosCAQEw
 # aDBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYG
 # A1UEAxMfR2xvYmFsU2lnbiBUaW1lc3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x
 # +EJ+6RnMU0EUMAkGBSsOAwIaBQCggf0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEH
-# ATAcBgkqhkiG9w0BCQUxDxcNMTcwNjE0MTk0MTAzWjAjBgkqhkiG9w0BCQQxFgQU
-# tf4mSIvB6YgGcUlTiUL2lT+r12gwgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGE
+# ATAcBgkqhkiG9w0BCQUxDxcNMTcwNjE0MjAwODM5WjAjBgkqhkiG9w0BCQQxFgQU
+# M+DX/xeC5MshnVMd/jOk7u9u46swgZ0GCyqGSIb3DQEJEAIMMYGNMIGKMIGHMIGE
 # BBRjuC+rYfWDkJaVBQsAJJxQKTPseTBsMFakVDBSMQswCQYDVQQGEwJCRTEZMBcG
 # A1UEChMQR2xvYmFsU2lnbiBudi1zYTEoMCYGA1UEAxMfR2xvYmFsU2lnbiBUaW1l
 # c3RhbXBpbmcgQ0EgLSBHMgISESHWmadklz7x+EJ+6RnMU0EUMA0GCSqGSIb3DQEB
-# AQUABIIBAD7St8GFP+Au6siYHURlmGhhzeo9yi/tqP8ND8zxtdLD1jV3Z23coz5t
-# pZZhdXR46RBM/xM2ivE1/aNkJi0MHkYr7hE17ZO81682Tnljx95kL8AIyoUEW+Zm
-# UxPOhbV/iB+Zjb7iVdoU39+dH8anqaaWp6/LpS/MQsnX8BJ8SvzXFFPgXVCJNeHo
-# 5UtE8yT5qOoLhho6URYFgb+qiWEIZ5JZ58DqI/OrOjfJ8eGS7D5nh8iodoNaMjYM
-# /nf9w5+ljIL982FMxqMLuPi/0DmBdGVB5zvu9OabtcZDpZvPq4MSvxsChNcpLXjt
-# nodF3TO2960B0S1cUpwaetSJvhgCdR8=
+# AQUABIIBAA5p6xRPYSQALEVs5OuJ7qWvkcSHjvCXp+4fADBsy4vux5pl6kda6MCB
+# hDsrURLsPeor4kgaiMDZIv6iqVx1FrWmOylKrgQSq3kvnw3ifdVkp5UWfrlaF0NG
+# qBqvtTsT+piv+UDrpQzkxVNX3MjkgXy4R+eZ8nr7Z08k2IpCcZaLzO/3DHisNNl/
+# 7fVV5t83rLScRx9FlKI7pFPRd7122kDVcmTFiKLfBQOMHMtdq026T4aFmaFUGuev
+# 0WYXm/MWjUUPW/WUBHowXGEO7na9Uzq+bt9xrbpLcs+vlgXNQt5WJYFKGTpcL2R8
+# P1zHLzd9T98aZo8sLUiPPiEOcQfiigc=
 # SIG # End signature block
