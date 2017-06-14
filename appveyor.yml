@@ -1,7 +1,28 @@
 version: 1.0.{build}
 image: WMF 5
 init:
-- ps: $deploy = "`$vmwfs14 = New-PSSession -ComputerName VMWFS14`nRemove-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\appveyor.yml`"`nRemove-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\.gitignore`" -Force`nRemove-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\.gitattributes`" -Force`nRemove-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\Tests`" -Recurse`nRemove-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}\.git`" -Recurse -Force`nCopy-Item -Path `"`${Env:APPLICATION_PATH}\`${Env:APPVEYOR_PROJECT_SLUG}`" -Destination `"H:\Archive\SCCM\Staging\`${Env:APPVEYOR_PROJECT_NAME}\`${Env:APPVEYOR_BUILD_VERSION}`" -ToSession `$vmwfs14 -Recurse"`nImport-Module -Name `"`$(Split-Path `$Env:SMS_ADMIN_UI_PATH)\ConfigurationManager.psd1`"`nSet-Location -Path MS1:`nNew-CMApplication -Name `"AppVeyor - `${APPVEYOR_PROJECT_NAME}`" -AutoInstall `$true
+- ps: >-
+    $deploy = @"
+
+    $vmwfs14 = New-PSSession -ComputerName VMWFS14
+
+    Remove-Item -Path "${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\appveyor.yml"
+
+    Remove-Item -Path "${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\.gitignore" -Force
+
+    Remove-Item -Path "${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\.gitattributes" -Force
+
+    Remove-Item -Path "${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\.git" -Recurse -Force
+
+    Remove-Item -Path "${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}\Tests" -Recurse
+
+    Copy-Item -Path "${Env:APPLICATION_PATH}\${Env:APPVEYOR_PROJECT_SLUG}" -Destination "H:\Archive\SCCM\Staging\${Env:APPVEYOR_PROJECT_NAME}\${Env:APPVEYOR_BUILD_VERSION}" -ToSession $vmwfs14 -Recurse"
+
+    Import-Module -Name "$(Split-Path $Env:SMS_ADMIN_UI_PATH)\ConfigurationManager.psd1"
+
+    Set-Location -Path MS1:New-CMApplication -Name "AppVeyor - ${APPVEYOR_PROJECT_NAME}" -AutoInstall $true
+
+    "@
 install:
 - ps: >-
     Install-PackageProvider -Name NuGet –Force
