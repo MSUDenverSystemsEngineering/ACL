@@ -118,11 +118,9 @@ Try {
 		Show-InstallationProgress
 
 		## <Perform Pre-Installation tasks here>
-		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameters "/quiet"
+		Execute-MSI -Action Install "$dirFiles\Requirements\ACLRequirementsUpdate.msi" -Parameters "/qn"
 
-		##Execute-MSI -Action Install "$dirFiles\Requirements\ACLRequirementsUpdate.msi"
-
-		##*===============================================
+				##*===============================================
 		##* INSTALLATION
 		##*===============================================
 		[string]$installPhase = 'Installation'
@@ -134,7 +132,7 @@ Try {
 		}
 
 		## <Perform Installation tasks here>
-		Execute-MSI -Action Install "$dirFiles\ENU\ACL\ACL Desktop Education Edition.msi" -Parameters "/quiet"
+		Execute-MSI -Action Install "$dirFiles\ENU\ACL\ACL Desktop Education Edition.msi" -Parameters "DATADIR="C\ACL Data\" /qn"
 
 		##*===============================================
 		##* POST-INSTALLATION
@@ -142,6 +140,7 @@ Try {
 		[string]$installPhase = 'Post-Installation'
 
 		## <Perform Post-Installation tasks here>
+		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameters "/qn"
 
 		##*===============================================
 		##* PRE-UNINSTALLATION
@@ -149,7 +148,7 @@ Try {
 		[string]$installPhase = 'Pre-Uninstallation'
 
 		## Show Welcome Message, close Internet Explorer with a 60 second countdown before automatically closing
-		Show-InstallationWelcome -CloseApps 'iexplore' -CloseAppsCountdown 60
+		Show-InstallationWelcome -CloseApps 'acledu' -CloseAppsCountdown 60
 
 		## Show Progress Message (with the default message)
 		Show-InstallationProgress
@@ -169,7 +168,8 @@ Try {
 		}
 
 		# <Perform Uninstallation tasks here>
-
+		Execute-MSI -Action Install "$dirFiles\ENU\ACL\ACL Desktop Education Edition.msi" -Parameters "/uninstall /qn"
+		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameters "/uninstall /qn"
 
 		##*===============================================
 		##* POST-UNINSTALLATION
@@ -177,7 +177,7 @@ Try {
 		[string]$installPhase = 'Post-Uninstallation'
 
 		## <Perform Post-Uninstallation tasks here>
-
+		Remove-Folder -Path "C:\ACL Data"
 
 	}
 
