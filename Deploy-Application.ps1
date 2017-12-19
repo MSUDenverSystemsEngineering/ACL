@@ -118,7 +118,7 @@ Try {
 		Show-InstallationProgress
 
 		## <Perform Pre-Installation tasks here>
-		Execute-MSI -Action Install "$dirFiles\ENU\ACL\Requirements\mxml.msi" -Parameters "/qn"
+		Execute-MSI -Action Install "$dirFiles\ENU\ACL\Requirements\msxml.msi" -Parameters "/qn"
 
 				##*===============================================
 		##* INSTALLATION
