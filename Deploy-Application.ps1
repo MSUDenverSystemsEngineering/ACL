@@ -132,7 +132,7 @@ Try {
 		}
 
 		## <Perform Installation tasks here>
-		Execute-MSI -Action Install "$dirFiles\ENU\ACL\ACL Desktop Education Edition.msi" -Parameters "DATADIR="C\ACL Data\" /qn"
+		Execute-MSI -Action Install "$dirFiles\ENU\ACL\ACL Desktop Education Edition.msi" -Parameters "DATADIR='C:\ACL Data\' /qn"
 
 		##*===============================================
 		##* POST-INSTALLATION
