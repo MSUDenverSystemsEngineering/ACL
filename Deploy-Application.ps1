@@ -142,6 +142,18 @@ Try {
 		## <Perform Post-Installation tasks here>
 		Execute-MSI -Action Install "$dirFiles\Components\ACL Components XI.msi" -Parameters "/qn"
 
+		New-Shortcut -Path "$envCommonDesktop\ACL Desktop Education.lnk" `
+    -TargetPath "$envProgramFilesX86\ACL Software\ACL Desktop Education Edition\ACLedu.exe" `
+    -Arguments "--example-argument --example-argument-two" `
+    -Description 'ACL Desktop Education' `
+    -WorkingDirectory "$envHomeDrive\$envHomePath"
+
+		New-Shortcut -Path "$envCommonPrograms\ACL Desktop Education.lnk" `
+		-TargetPath "$envProgramFilesX86\ACL Software\ACL Desktop Education Edition\ACLedu.exe" `
+		-Arguments "--example-argument --example-argument-two" `
+		-Description 'ACL Desktop Education' `
+		-WorkingDirectory "$envHomeDrive\$envHomePath"
+
 		##*===============================================
 		##* PRE-UNINSTALLATION
 		##*===============================================
